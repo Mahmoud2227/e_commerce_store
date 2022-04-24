@@ -3,6 +3,8 @@ import {useState, useEffect} from "react";
 import {commerce} from "./lib/commerce";
 import {Products, NavBar, Cart} from "./components";
 
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+
 function App() {
 	const [products, setProducts] = useState([]);
 	const [cart, setCart] = useState([]);
@@ -19,7 +21,7 @@ function App() {
 	const fetchCart = async () => {
 		// setIsLoading(true);
 		const cart = await commerce.cart.retrieve();
-
+		console.log(cart);
 		setCart(cart);
 		// setIsLoading(false);
 	};
@@ -37,11 +39,17 @@ function App() {
 
 	return (
 		// !isLoading && (
-		<>
+		<Router>
 			<NavBar totalItems={cart.total_items} />
-			{/* <Products products={products} onAddToCart={handleAddToCart} /> */}
-			<Cart cart={cart} />
-		</>
+			<Routes>
+				<Route
+					exact
+					path='/'
+					element={<Products products={products} onAddToCart={handleAddToCart} />}
+				/>
+				<Route exact path='/cart' element={<Cart cart={cart} />} />
+			</Routes>
+		</Router>
 	);
 	// );
 }

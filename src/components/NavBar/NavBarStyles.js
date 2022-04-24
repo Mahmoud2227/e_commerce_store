@@ -32,6 +32,8 @@ export default makeStyles((theme) => ({
 	badge: {
 		display: "flex",
 		alignItems: "center",
+		textDecoration: "none",
+		color: "inherit",
 	},
 	search: {
 		position: "relative",
