@@ -28,6 +28,7 @@ const selectBoxReducer = (state, action) => {
 			return {
 				...state,
 				country: action.country,
+				subdivision: "",
 			};
 		case "SET_SUBDIVISIONS":
 			const subdivisions = Object.entries(action.subdivisions).map(([code, name]) => ({
@@ -73,6 +74,7 @@ const CustomSelect = ({checkoutToken}) => {
 	const [state, dispatch] = useReducer(selectBoxReducer, initialState);
 
 	const {countries, subdivisions, options, country, subdivision, option} = state;
+	const currentSubdivision = subdivision;
 	// const countries = Object.entries(shippingCountries).map(([code, name]) => ({
 	// 	id: code,
 	// 	label: name,
@@ -92,6 +94,7 @@ const CustomSelect = ({checkoutToken}) => {
 		const {countries} = await commerce.services.localeListShippingCountries(checkoutTokenID);
 		dispatch({type: "SET_COUNTRIES", countries});
 		dispatch({type: "SET_COUNTRY", country: Object.keys(countries)[0]});
+		// dispatch({type: "SET_SUBDIVISION", subdivision: ""});
 	};
 
 	const fetchSubdivisions = async (checkoutTokenID, countryCode) => {
