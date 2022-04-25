@@ -6,7 +6,7 @@ import CartItem from "./CartItem/CartItem";
 
 import useStyles from "./CartStyles";
 
-const Cart = ({cart}) => {
+const Cart = ({cart, handleUpdateCartQty, handleRemoveFromCart, handleEmptyCart}) => {
 	const classes = useStyles();
 
 	const EmptyCard = () => (
@@ -23,7 +23,11 @@ const Cart = ({cart}) => {
 			<Grid container spacing={3}>
 				{cart.line_items.map((item) => (
 					<Grid item xs={12} sm={4} key={item.id}>
-						<CartItem item={item} />
+						<CartItem
+							item={item}
+							onUpdateCartQty={handleUpdateCartQty}
+							onRemoveFromCart={handleRemoveFromCart}
+						/>
 					</Grid>
 				))}
 			</Grid>
@@ -35,7 +39,8 @@ const Cart = ({cart}) => {
 						size='large'
 						type='button'
 						variant='contained'
-						color='secondary'>
+						color='secondary'
+						onClick={handleEmptyCart}>
 						Empty Cart
 					</Button>
 					<Button
@@ -51,9 +56,9 @@ const Cart = ({cart}) => {
 		</>
 	);
 
-	if (!cart.line_items) {
-		return "Loading...";
-	}
+	// if (!cart.line_items) {
+	// 	return "Loading...";
+	// }
 
 	return (
 		<Container>
