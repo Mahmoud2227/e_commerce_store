@@ -63,38 +63,15 @@ const selectBoxReducer = (state, action) => {
 	}
 };
 
-const CustomSelect = ({checkoutToken}) => {
-	// const [shippingCountries, setShippingCountries] = useState([]);
-	// const [shippingCountry, setShippingCountry] = useState("");
-	// const [shippingSubdivisions, setShippingSubdivisions] = useState("");
-	// const [shippingSubdivision, setShippingSubdivision] = useState("");
-	// const [shippingOptions, setShippingOptions] = useState([]);
-	// const [shippingOption, setShippingOption] = useState("");
-
+const CustomSelect = ({checkoutToken, getCountryData}) => {
 	const [state, dispatch] = useReducer(selectBoxReducer, initialState);
 
 	const {countries, subdivisions, options, country, subdivision, option} = state;
-	const currentSubdivision = subdivision;
-	// const countries = Object.entries(shippingCountries).map(([code, name]) => ({
-	// 	id: code,
-	// 	label: name,
-	// }));
-
-	// const subdivisions = Object.entries(shippingSubdivisions).map(([code, name]) => ({
-	// 	id: code,
-	// 	label: name,
-	// }));
-
-	// const options = shippingOptions.map((option) => ({
-	// 	id: option.id,
-	// 	label: `${option.description} - ${option.price.formatted_with_symbol}`,
-	// }));
 
 	const fetchShippingCountries = async (checkoutTokenID) => {
 		const {countries} = await commerce.services.localeListShippingCountries(checkoutTokenID);
 		dispatch({type: "SET_COUNTRIES", countries});
 		dispatch({type: "SET_COUNTRY", country: Object.keys(countries)[0]});
-		// dispatch({type: "SET_SUBDIVISION", subdivision: ""});
 	};
 
 	const fetchSubdivisions = async (checkoutTokenID, countryCode) => {
@@ -129,8 +106,9 @@ const CustomSelect = ({checkoutToken}) => {
 	useEffect(() => {
 		if (subdivision) {
 			fetchShippingOptions(checkoutToken.id, country, subdivision);
+			getCountryData({country, subdivision, option});
 		}
-	}, [checkoutToken.id, country, subdivision]);
+	}, [checkoutToken.id, country, subdivision, option, getCountryData]);
 
 	return (
 		<>
