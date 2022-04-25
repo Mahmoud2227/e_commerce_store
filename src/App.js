@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 
 import {commerce} from "./lib/commerce";
 import {CircularProgress} from "@material-ui/core";
-import {Products, NavBar, Cart} from "./components";
+import {Products, NavBar, Cart, Checkout} from "./components";
 
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
@@ -81,6 +81,7 @@ function App() {
 								/>
 							}
 						/>
+						<Route exact path='/checkout' element={<Checkout cart={cart} />} />
 					</Routes>
 				)}
 			</Router>

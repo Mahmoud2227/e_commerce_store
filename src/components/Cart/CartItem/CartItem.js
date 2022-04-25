@@ -6,7 +6,6 @@ import useStyles from "./CartItemStyles";
 
 const CartItem = ({item, onUpdateCartQty, onRemoveFromCart}) => {
 	const classes = useStyles();
-	console.log(item, onRemoveFromCart);
 
 	return (
 		<Card style={{height: "100%", display: "flex", flexDirection: "column"}}>
